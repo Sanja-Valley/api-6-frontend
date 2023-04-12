@@ -1,0 +1,118 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    background-color: #ddfff6;
+}
+
+.template{
+    background-color: #ddfff6;
+}
+
+.home{
+    position:fixed;
+    justify-content: center;
+    width: 100%;
+    background-color: #ddfff6;   
+
+}
+
+.fundo{
+    opacity: 0.5;
+    
+}
+
+
+.chat{
+    position: fixed;
+    right:20px;
+    bottom: 10px;
+    border: solid 1px;
+    width: 230px;
+    background: #a8055771;
+}
+
+.areaInput{
+    background: #5f023171;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+
+.areaInput input{
+    width: 180px;
+    height: 19px; 
+    background: #f3f3f371;   
+    
+}
+
+::placeholder{
+    color: rgb(44, 44, 44);
+}
+
+.areaInput button svg{
+    height: 30px;
+    bottom: 10px;
+    rotate: 45deg;
+    color: rgb(83, 4, 63);
+    position: relative;
+    left: -8px;
+    top: 2px;
+    
+    
+} 
+
+.areaTexto{
+    width: 100%;
+    height: 300px;
+    position: relative;
+    
+    
+}
+
+.bot{
+    background:rgb(196, 188, 193) ;
+    width: max-content;
+    padding: 3px;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    max-width: 218px;
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+}
+
+.user{
+    max-width: 218px;
+    right: 0px;
+    /*position: absolute;*/
+    position: relative;
+    background:rgb(245, 244, 244) ;
+    width: max-content;
+    right: 0;
+    padding: 3px;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    justify-self: flex-end;
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonEnviar{
+    background-color:rgba(0,0,0,0);
+    border: none;
+    /* justify-items: center; */
+
+
+}
+
+.sent-by{
+    font-size: small;
+}
