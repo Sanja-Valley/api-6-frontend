@@ -62,10 +62,9 @@ export default {
     verifica(e){
       if(e.key == "Enter"){
           this.enviar();
-      }
+      } 
     }
  
-
   }
 
 }
