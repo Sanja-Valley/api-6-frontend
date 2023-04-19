@@ -3,9 +3,6 @@
     <img class="fundo" alt="Vue logo" src="../assets/logo.jpg">
     <div class="chat">
         <div id="conversa" class="areaTexto">
-            <div class="bot">
-                {{receber}}
-            </div>
             <div class="usuario" v-for="(mensagem, index) in mensagens" :key="index" :class="mensagem.usuario">
                 <span class="sent-by">{{ mensagem.usuario }}:</span>
                 <span>{{ mensagem.mensagem }}</span>
@@ -43,23 +40,30 @@ export default {
   data() {
     return {
       meuInput: '',
+      meuContexto: 'geral',
       mensagens: [],
-      teste: ''
+      
+
     }
     
   }, 
   methods:{
     adicionarMensagem(mensagem,usuario){
-      this.mensagens.push({ mensagem: mensagem, usuario: usuario });
+      this.mensagens.push({ mensagem: mensagem, usuario: usuario }); 
     },
     enviar(){
       this.adicionarMensagem(this.meuInput, 'user');
+      this.receber(this.meuInput);
       this.meuInput = '';
+      
       
     },
     async receber(recebido) {
-       this.teste = (await axios.post("http://localhost:5000/chat/", { mensagem: recebido})).data
-       return this;
+       axios.post("http://localhost:5000/chat/", { mensagem: recebido, contexto: this.meuContexto})
+       .then((response) => {
+        this.meuContexto = response.data.contexto
+        this.adicionarMensagem(response.data.resposta, "bot" );
+       })
    },
     verifica(e){
       if(e.key == "Enter"){
