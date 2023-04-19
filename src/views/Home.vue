@@ -43,13 +43,13 @@ export default {
       meuContexto: 'geral',
       mensagens: [],
       
+
     }
     
   }, 
   methods:{
     adicionarMensagem(mensagem,usuario){
-      this.mensagens.push({ mensagem: mensagem, usuario: usuario });
-      
+      this.mensagens.push({ mensagem: mensagem, usuario: usuario }); 
     },
     enviar(){
       this.adicionarMensagem(this.meuInput, 'user');
@@ -65,7 +65,6 @@ export default {
         this.adicionarMensagem(response.data.resposta, "bot" );
        })
    },
-   
     verifica(e){
       if(e.key == "Enter"){
           this.enviar();
