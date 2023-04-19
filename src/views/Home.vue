@@ -4,11 +4,12 @@
     <div class="chat">
         <div id="conversa" class="areaTexto">
             <div class="bot">
-                ffft mihrji rmjyiphr jmyhoi rojioj tgtif jtgmsro
+                {{receber}}
             </div>
-            <!-- <div class="usuario">
-
-            </div> -->
+            <div class="usuario" v-for="(mensagem, index) in mensagens" :key="index" :class="mensagem.usuario">
+                <span class="sent-by">{{ mensagem.usuario }}:</span>
+                <span>{{ mensagem.mensagem }}</span>
+           </div>
             
         </div>
         <div class="areaInput">
@@ -20,6 +21,7 @@
             class="css-i6dzq1"><line x1="22" y1="2" x2="11" y2="13"></line><polygon 
             points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></Button>
             <!--  -->
+            
         </div>
     </div>
   </div>
@@ -40,35 +42,30 @@ export default {
   },
   data() {
     return {
-      meuInput: ''
+      meuInput: '',
+      mensagens: [],
+      teste: ''
     }
     
   }, 
   methods:{
     adicionarMensagem(mensagem,usuario){
-      const areaTexto = document.getElementById("conversa");
-      areaTexto.innerHTML+=`<div class="${usuario}"><span class="sent-by">${usuario}:</span><span>${mensagem}</span></div>`;
-      console.log(mensagem, usuario)
+      this.mensagens.push({ mensagem: mensagem, usuario: usuario });
     },
     enviar(){
-      const chatInput = document.getElementById("enviar");
-        this.adicionarMensagem(chatInput.value, "user");
-        this.meuInput = '';
+      this.adicionarMensagem(this.meuInput, 'user');
+      this.meuInput = '';
+      
     },
-    buscar() {
-            
-                axios.get("http://localhost:8081/")
-    },
+    async receber(recebido) {
+       this.teste = (await axios.post("http://localhost:5000/chat/", { mensagem: recebido})).data
+       return this;
+   },
     verifica(e){
       if(e.key == "Enter"){
           this.enviar();
       }
     }
- 
-
   }
-
 }
-
-
 </script>
