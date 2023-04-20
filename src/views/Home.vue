@@ -55,7 +55,7 @@ export default {
       this.adicionarMensagem(this.meuInput, 'user');
       this.receber(this.meuInput);
       this.meuInput = '';
-      
+     
       
     },
     async receber(recebido) {
@@ -63,8 +63,10 @@ export default {
        .then((response) => {
         this.meuContexto = response.data.contexto
         this.adicionarMensagem(response.data.resposta, "bot" );
+
        })
    },
+
     verifica(e){
       if(e.key == "Enter"){
           this.enviar();
