@@ -1,11 +1,20 @@
 <template>
   <div class="home">
     <img class="fundo" alt="Vue logo" src="../assets/logo.jpg">
+
+    <div>
+      
+    </div>
+
     <div class="chat">
         <div id="conversa" class="areaTexto">
-            <div class="usuario" v-for="(mensagem, index) in mensagens" :key="index" :class="mensagem.usuario">
+            <div class="usuario" ref="messages" v-for="(mensagem, index) in mensagens" :key="index" :class="mensagem.usuario">
                 <span class="sent-by">{{ mensagem.usuario }}:</span>
                 <span>{{ mensagem.mensagem }}</span>
+                <div v-for="(imagem, imagem_index) in mensagem.imagem" :key="imagem_index">
+                  {{imagem_index + 1}}
+                  <img :src="require(`@/assets/${imagem}`)" class="imagemChat" >
+                </div>
            </div>
             
         </div>
@@ -41,35 +50,58 @@ export default {
     return {
       meuInput: '',
       meuContexto: 'geral',
+      n: 0,
       mensagens: [],
-      
-
+      imagens:{
+        "local": ["chacara.jpg", "salao.jpeg"],
+        "decoracao": []
+      }
     }
     
   }, 
   methods:{
-    adicionarMensagem(mensagem,usuario){
-      this.mensagens.push({ mensagem: mensagem, usuario: usuario }); 
+    adicionarMensagem(mensagem,usuario, imagem){
+      if(!imagem){
+        imagem = []
+      }
+      this.mensagens.push({ mensagem: mensagem, usuario: usuario, imagem: imagem});
+      console.log(mensagem, usuario, imagem) 
+      this.$nextTick(this.scrollToBottom);
     },
+
     enviar(){
       this.adicionarMensagem(this.meuInput, 'user');
       this.receber(this.meuInput);
-      this.meuInput = '';
-      
-      
+      this.meuInput = '';  
     },
+
     async receber(recebido) {
-       axios.post("http://localhost:5000/chat/", { mensagem: recebido, contexto: this.meuContexto})
+       axios.post("http://localhost:5000/chat/", { mensagem: recebido, contexto: this.meuContexto, n: this.n, })
        .then((response) => {
         this.meuContexto = response.data.contexto
-        this.adicionarMensagem(response.data.resposta, "bot" );
-       })
-   },
+        this.n = response.data.n
+        let resposta = response.data.resposta
+        let imagem = null
+
+        if(resposta.includes("|")){
+          let respostas_partes = resposta.split("|")
+          resposta = respostas_partes[0];
+          imagem = this.imagens[respostas_partes[1]];
+        }
+
+        this.adicionarMensagem(resposta, "bot", imagem );
+      })},
     verifica(e){
       if(e.key == "Enter"){
           this.enviar();
       }
-    }
+    },
+    scrollToBottom() {
+            let lastMessage = this.$refs.messages.slice(-1)[0];
+
+            lastMessage.scrollIntoView();
+        }
   }
 }
+
 </script>
