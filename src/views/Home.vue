@@ -54,7 +54,7 @@ export default {
       mensagens: [],
       imagens:{
         "local": ["chacara.jpg", "salao.jpeg"],
-        "decoracao": []
+        "decoracao": ["arco.jpg","bolo.jpg","kit.jpg","baloes.jpg","tecido.jpg"]
       }
     }
     
@@ -88,7 +88,6 @@ export default {
           resposta = respostas_partes[0];
           imagem = this.imagens[respostas_partes[1]];
         }
-
         this.adicionarMensagem(resposta, "bot", imagem );
       })},
     verifica(e){
