@@ -26,7 +26,6 @@ body{
     
 }
 
-
 .chat{
     position: fixed;
     right:  20px;
@@ -118,10 +117,39 @@ body{
 
 .sent-by{
     font-size: small;
+    white-space: pre-wrap;    
+    word-wrap: break-word;   
+    font-family: inherit;
 }
 
 .imagemChat{
     margin-top: 5px;
     width: 130px;
     position: center;
+}
+
+.ajuste:has(.user){
+    width: 100%; 
+    display: flex; 
+    justify-content: flex-end;
+}
+
+.usuario.bot{
+    width: 100%; 
+    display: flex; 
+    justify-content: flex-end;
+}
+
+.qrCode img{
+    width: 100%;
+    height: auto;
+}
+
+.btn-copy{
+    background: #5f023171;
+    color: black;
+    border: none;
+    padding: 5px;
+    width: 100%;
+    margin-top: 10px;
 }
