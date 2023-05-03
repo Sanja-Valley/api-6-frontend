@@ -1,21 +1,33 @@
 <template>
   <div class="home">
+    <Toast />
     <img class="fundo" alt="Vue logo" src="../assets/logo.jpg">
-
+    <!-- <Checkbox v-model="checked" :binary="true" /> -->
     <div>
       
     </div>
 
     <div class="chat">
         <div id="conversa" class="areaTexto">
-            <div class="usuario" ref="messages" v-for="(mensagem, index) in mensagens" :key="index" :class="mensagem.usuario">
-                <span class="sent-by">{{ mensagem.usuario }}:</span>
-                <span>{{ mensagem.mensagem }}</span>
+          
+            <div class="ajuste" ref="messages" v-for="(mensagem, index) in mensagens" :key="index" >
+              <div class="usuario" :class="mensagem.usuario">
+              <p class="sent-by">{{ mensagem.usuario }}:</p>
+                <p>{{ mensagem.mensagem }}</p>
                 <div v-for="(imagem, imagem_index) in mensagem.imagem" :key="imagem_index">
-                  {{imagem_index + 1}}
+                  <br>{{imagem_index + 1}}
                   <img :src="require(`@/assets/${imagem}`)" class="imagemChat" >
                 </div>
-           </div>
+                <div v-if="mensagem.pix" class="qrCode">
+                  <br>
+                  <img :src="`data:image/png;base64, ${mensagem.pix.codigo_QR}`" >
+                  <br>
+                  <button class="btn-copy" @click="copyKey(mensagem)">Copiar chave PIX</button>
+                </div>
+          
+                
+              </div>
+            </div>  
             
         </div>
         <div class="areaInput">
@@ -39,11 +51,16 @@
 //import HelloWorld from '@/components/HelloWorld.vue'
 import '@/css/home.css';
 import axios from "axios";
+// import Checkbox from 'primevue/checkbox';
+import Clipboard from 'clipboard';
+import Toast from 'primevue/toast';
 
 
 export default {
   name: 'Home',
   components: {
+    // Checkbox,
+    Toast   
     
   },
   data() {
@@ -55,24 +72,57 @@ export default {
       imagens:{
         "local": ["chacara.jpg", "salao.jpeg"],
         "decoracao": ["arco.jpg","bolo.jpg","kit.jpg","baloes.jpg","tecido.jpg"]
-      }
+      },
     }
     
   }, 
+  mounted() {
+  new Clipboard('.btn-copy', {
+    text: function() {
+      return 'sua_chave_pix'
+    }
+  })
+  },
   methods:{
-    adicionarMensagem(mensagem,usuario, imagem){
+  copyKey(mensagem) {
+    new Clipboard('.btn-copy', {
+      text: function() {
+        return mensagem.pix.copia_cola
+      }
+    }).on('success', function() {
+      alert('Chave PIX copiada para a área de transferência')
+    //   this.$toast.add({
+    //         severity: 'success', 
+    //         summary: 'Chave PIX copiada para a área de transferência',
+    //         life: 3000
+                                 
+    // })
+    })
+    },
+    adicionarMensagem(mensagem,usuario, imagem, pix){
+      let retorno = {
+        "mensagem": mensagem, 
+        "usuario": usuario
+      }
+      
       if(!imagem){
         imagem = []
       }
-      this.mensagens.push({ mensagem: mensagem, usuario: usuario, imagem: imagem});
-      console.log(mensagem, usuario, imagem) 
+      retorno["imagem"] = imagem
+      
+      if(pix){
+        retorno["pix"] = pix
+      }
+      
+      this.mensagens.push(retorno);
+      console.log(mensagem, usuario, imagem, pix) 
       this.$nextTick(this.scrollToBottom);
     },
 
     enviar(){
       this.adicionarMensagem(this.meuInput, 'user');
       this.receber(this.meuInput);
-      this.meuInput = '';  
+      this.meuInput = '';        
     },
 
     async receber(recebido) {
@@ -81,14 +131,16 @@ export default {
         this.meuContexto = response.data.contexto
         this.n = response.data.n
         let resposta = response.data.resposta
+        let pix = response.data.pix
         let imagem = null
+        
 
         if(resposta.includes("|")){
           let respostas_partes = resposta.split("|")
-          resposta = respostas_partes[0];
+          resposta = respostas_partes[0]; 
           imagem = this.imagens[respostas_partes[1]];
         }
-        this.adicionarMensagem(resposta, "bot", imagem );
+        this.adicionarMensagem(resposta, "bot", imagem, pix);
       })},
     verifica(e){
       if(e.key == "Enter"){
