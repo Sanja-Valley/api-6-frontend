@@ -128,12 +128,22 @@ export default {
     async receber(recebido) {
        axios.post("http://localhost:5000/chat/", { mensagem: recebido, contexto: this.meuContexto, n: this.n, })
        .then((response) => {
+
         this.meuContexto = response.data.contexto
         this.n = response.data.n
-        let resposta = response.data.resposta
-        let pix = response.data.pix
+        let resposta = ''
+        let pix = ''
         let imagem = null
-        
+
+        if(this.meuContexto == "finalizar"){
+          resposta = response.data.resposta.mensagem
+          pix = response.data.resposta.pix
+        }
+
+        else{
+          resposta = response.data.resposta
+          pix = response.data.pix
+        }
 
         if(resposta.includes("|")){
           let respostas_partes = resposta.split("|")
@@ -141,6 +151,7 @@ export default {
           imagem = this.imagens[respostas_partes[1]];
         }
         this.adicionarMensagem(resposta, "bot", imagem, pix);
+
       })},
     verifica(e){
       if(e.key == "Enter"){
