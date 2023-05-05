@@ -27,6 +27,7 @@ body{
 }
 
 .chat{
+    display: none;
     position: fixed;
     right:  20px;
     bottom: 10px;
@@ -146,6 +147,78 @@ body{
 }
 
 .btn-copy{
+    background: #5f023171;
+    color: black;
+    border: none;
+    padding: 5px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.termo{
+    position: absolute;
+    top: 0;
+    border: solid 1px;
+    border-color: #6d1056;
+    width: 600px;
+    height: 550px;
+    padding: 30px;
+    margin-left: calc(50% - 300px);
+    display: none;
+    background-color: aliceblue;
+}
+
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 40px;
+	height: 20px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+    margin-left: calc(50% - 20px);
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 10px;
+	height: 10px;
+	background: #fff;
+	border-radius: 90px;
+	
+}
+
+input:checked + label {
+	background: #6d1056;
+}
+
+input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-80%);
+}
+
+label:active:after {
+	width: 80px;
+}
+
+/* body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+} */
+
+.aceite{
     background: #5f023171;
     color: black;
     border: none;

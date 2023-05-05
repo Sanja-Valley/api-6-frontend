@@ -1,15 +1,29 @@
 <template>
   <div class="home">
-    <Toast />
     <img class="fundo" alt="Vue logo" src="../assets/logo.jpg">
-    <!-- <Checkbox v-model="checked" :binary="true" /> -->
-    <div>
-      
-    </div>
+    <div class="termo">
+       <h3>Termo de responsabilidade</h3> 
+       <p><br>São deveres do credenciado ou autorizado nas dependências do Palácio do Planalto:
+            <br>1. I – portar visivelmente a credencial ou a autorização; II – trajar-se de forma compatível
+            com o local onde se desenvolvem as atividades, segundo critérios fixados em ato
+            normativo específico; III – manter atualizados os seus dados pessoais e profissionais; IV
+            – agir com urbanidade e disciplina no desempenho de suas atividades de acordo com o
+            código de ética da profissão; V – conhecer e cumprir as normas regulamentares do
+            Palácio do Planalto.
+            <br>2. O uso da credencial ou da autorização é pessoal e intransferível, sujeitando-se o seu
+            titular à responsabilidade administrativa, civil e penal, quanto ao seu uso indevido.
+            <br>3. A credencial ou a autorização deverá ser devolvida ao Setor de Credenciamento da
+            Secretaria de Imprensa nas hipóteses de cancelamento, suspensão ou revogação do
+            credenciamento ou da autorização.
+            <br>Em respeito a Lei Geral de Proteção de dados - Lei nº13.709/2018 informamos que o iFest irá guardar seus dados para recomendações futuras de produtos e serviços. 
+       </p> 
+       <br>
+       <button class="aceite" @click="aceita()">Concordo</button>
+       <!-- <input type="checkbox" id="switch" /><label for="switch">Toggle</label> -->
+    </div> 
 
     <div class="chat">
         <div id="conversa" class="areaTexto">
-          
             <div class="ajuste" ref="messages" v-for="(mensagem, index) in mensagens" :key="index" >
               <div class="usuario" :class="mensagem.usuario">
               <p class="sent-by">{{ mensagem.usuario }}:</p>
@@ -32,7 +46,7 @@
         </div>
         <div class="areaInput">
             <!-- <input id='enviar' type="text" placeholder="Digite sua mensagem">  -->
-            <input id="enviar" type="text" v-model="meuInput" placeholder="Digite sua mensagem" @keypress="verifica">
+            <input disabled id="enviar" type="text" v-model="meuInput" placeholder="Digite sua mensagem" @keypress="verifica">
             <Button type="button" icon="pi pi-search" class="buttonEnviar" style="margin-left: 5px" @click="enviar">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" 
             stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" 
@@ -53,15 +67,12 @@ import '@/css/home.css';
 import axios from "axios";
 // import Checkbox from 'primevue/checkbox';
 import Clipboard from 'clipboard';
-import Toast from 'primevue/toast';
 
 
 export default {
   name: 'Home',
   components: {
-    // Checkbox,
-    Toast   
-    
+   
   },
   data() {
     return {
@@ -73,6 +84,8 @@ export default {
         "local": ["chacara.jpg", "salao.jpeg"],
         "decoracao": ["arco.jpg","bolo.jpg","kit.jpg","baloes.jpg","tecido.jpg"]
       },
+      
+
     }
     
   }, 
@@ -83,7 +96,28 @@ export default {
     }
   })
   },
+  created(){
+      if(!localStorage.getItem("concorda")){
+        setTimeout(function(){
+          document.querySelector(".termo").style.display = "block"
+        }, 1)
+      }
+      else{
+        setTimeout(function(){
+          document.querySelector("input").disabled = false
+    document.querySelector(".chat").style.display = "block" 
+    document.querySelector(".termo").style.display = "none"
+        }, 1)
+      }
+    },
   methods:{
+   aceita(){
+    document.querySelector("input").disabled = false
+    document.querySelector(".chat").style.display = "block" 
+    document.querySelector(".termo").style.display = "none"
+    localStorage.setItem('concorda', true)
+
+  },
   copyKey(mensagem) {
     new Clipboard('.btn-copy', {
       text: function() {
@@ -153,6 +187,7 @@ export default {
             lastMessage.scrollIntoView();
         }
   }
+
 }
 
 </script>
