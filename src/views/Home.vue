@@ -145,7 +145,6 @@ export default {
       document.querySelector(".email").style.display = "block" 
     },
    aceita(){
-    // document.querySelector("input").disabled = false
     document.querySelector(".chat").style.display = "block" 
     document.querySelector(".termo").style.display = "none"
     localStorage.setItem('concorda', true)
