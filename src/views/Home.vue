@@ -116,7 +116,7 @@ export default {
       }
       else{
         setTimeout(function(){
-          document.querySelector("input").disabled = false
+          document.querySelector("input#enviar").disabled = false
           document.querySelector(".chat").style.display = "block" 
           document.querySelector(".termo").style.display = "none"
         }, 1)
