@@ -15,26 +15,7 @@
        <br>
        <button class="aceite" @click="concordaEmail()">Concordo</button>
     </div> 
-    <div class="termo">
-       <h3>Termo de responsabilidade</h3> 
-       <p><br>São deveres do credenciado ou autorizado nas dependências do Palácio do Planalto:
-            <br>1. I – portar visivelmente a credencial ou a autorização; II – trajar-se de forma compatível
-            com o local onde se desenvolvem as atividades, segundo critérios fixados em ato
-            normativo específico; III – manter atualizados os seus dados pessoais e profissionais; IV
-            – agir com urbanidade e disciplina no desempenho de suas atividades de acordo com o
-            código de ética da profissão; V – conhecer e cumprir as normas regulamentares do
-            Palácio do Planalto.
-            <br>2. O uso da credencial ou da autorização é pessoal e intransferível, sujeitando-se o seu
-            titular à responsabilidade administrativa, civil e penal, quanto ao seu uso indevido.
-            <br>3. A credencial ou a autorização deverá ser devolvida ao Setor de Credenciamento da
-            Secretaria de Imprensa nas hipóteses de cancelamento, suspensão ou revogação do
-            credenciamento ou da autorização.
-            <br>Em respeito a Lei Geral de Proteção de dados - Lei nº13.709/2018 informamos que o iFest irá guardar seus dados para recomendações futuras de produtos e serviços. 
-       </p> 
-       <br>
-       <button class="aceite" @click="aceita()">Concordo</button>
-    </div> 
-
+  
     <div class="chat">
         <div id="conversa" class="areaTexto">
             <div class="ajuste" ref="messages" v-for="(mensagem, index) in mensagens" :key="index" >
@@ -83,9 +64,8 @@ import Clipboard from 'clipboard';
 
 
 export default {
-  name: 'Home',
+  name: 'Home', 
   components: {
-  
   },
   data() {
     return {
@@ -109,18 +89,19 @@ export default {
   })
   },
   created(){
-      if(!localStorage.getItem("concorda")){
-        setTimeout(function(){
-          document.querySelector(".termo").style.display = "block"
-        }, 1)
-      }
-      else{
-        setTimeout(function(){
-          document.querySelector("input").disabled = false
-          document.querySelector(".chat").style.display = "block" 
-          document.querySelector(".termo").style.display = "none"
-        }, 1)
-      }
+
+      // if(!localStorage.getItem("concorda")){
+      //   setTimeout(function(){
+      //     document.querySelector(".termo").style.display = "block"
+      //   }, 1)
+      // }
+      // else{
+      //   setTimeout(function(){
+      //     document.querySelector("input").disabled = false
+      //     document.querySelector(".chat").style.display = "block" 
+      //     document.querySelector(".termo").style.display = "none"
+      //   }, 1)
+      // }
     },
   methods:{
     notificacao(){
@@ -144,13 +125,7 @@ export default {
     ativaNotificacao(){
       document.querySelector(".email").style.display = "block" 
     },
-   aceita(){
-    document.querySelector(".chat").style.display = "block" 
-    document.querySelector(".termo").style.display = "none"
-    localStorage.setItem('concorda', true)
-    this.ativaNotificacao();
-    alert("Para interromper ou iniciar o recebimento de e-mails com novidades clique no sininho.")
-  },
+  
   copyKey(mensagem) {
     new Clipboard('.btn-copy', {
       text: function() {
