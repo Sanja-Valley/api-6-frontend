@@ -40,8 +40,8 @@
         </div>
         <div class="areaInput">
             <!-- <input id='enviar' type="text" placeholder="Digite sua mensagem">  -->
-            <input disabled id="enviar" type="text" v-model="meuInput" placeholder="Digite sua mensagem" @keypress="verifica">
-            <Button disabled id="enviar" type="button" icon="pi pi-search" class="buttonEnviar" style="margin-left: 5px" @click="enviar">
+            <input  id="enviar" type="text" v-model="meuInput" placeholder="Digite sua mensagem" @keypress="verifica">
+            <Button id="enviar" type="button" icon="pi pi-search" class="buttonEnviar" style="margin-left: 5px" @click="enviar">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" 
             stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" 
             class="css-i6dzq1"><line x1="22" y1="2" x2="11" y2="13"></line><polygon 
@@ -86,23 +86,11 @@ export default {
     text: function() {
       return 'sua_chave_pix'
     }
-  })
-  },
-  created(){
 
-      // if(!localStorage.getItem("concorda")){
-      //   setTimeout(function(){
-      //     document.querySelector(".termo").style.display = "block"
-      //   }, 1)
-      // }
-      // else{
-      //   setTimeout(function(){
-      //     document.querySelector("input").disabled = false
-      //     document.querySelector(".chat").style.display = "block" 
-      //     document.querySelector(".termo").style.display = "none"
-      //   }, 1)
-      // }
-    },
+  }),
+   alert("Para iniciar ou interromper o recebimento de e-mails com novidades clique no sininho.")
+
+  },
   methods:{
     notificacao(){
       this.ativaNotificacao()

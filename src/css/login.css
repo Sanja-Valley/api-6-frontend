@@ -22,3 +22,16 @@
     height: 25px; 
     background: #f3f3f371; 
 }
+
+.termo{
+    position: absolute;
+    top: 0;
+    border: solid 1px;
+    border-color: #6d1056;
+    width: 600px;
+    height: 550px;
+    padding: 30px;
+    margin-top: 54px;
+    display: none;
+    background-color: aliceblue;
+}
