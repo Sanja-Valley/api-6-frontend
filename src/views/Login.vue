@@ -11,21 +11,16 @@
       <p ref="texto"/>    
        <button class="aceite" @click="aceita()">Concordo</button>
     </div> 
-  </div>
-
- 
+  </div> 
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from "axios";
 import '@/css/login.css';
-
 
 export default {
   name: "Login",
   components: {
-
   },
   data() {
     //onde se declara o objetos e variáveis
@@ -58,7 +53,6 @@ export default {
           } else {
             this.$router.push('/home');
           }
-
           })
         .catch(() => {
           this.$toast.add({
@@ -79,7 +73,6 @@ export default {
       .then(() => {
         this.$router.push('/home')
       })
-      
   },
   },
 };

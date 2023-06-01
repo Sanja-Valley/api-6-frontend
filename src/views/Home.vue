@@ -31,23 +31,17 @@
                   <img :src="`data:image/png;base64, ${mensagem.pix.codigo_QR}`" >
                   <br>
                   <button class="btn-copy" @click="copyKey(mensagem)">Copiar chave PIX</button>
-                </div>
-          
-                
+                </div>              
               </div>
-            </div>  
-            
+            </div>           
         </div>
-        <div class="areaInput">
-            <!-- <input id='enviar' type="text" placeholder="Digite sua mensagem">  -->
+      <div class="areaInput">
             <input  id="enviar" type="text" v-model="meuInput" placeholder="Digite sua mensagem" @keypress="verifica">
             <Button id="enviar" type="button" icon="pi pi-search" class="buttonEnviar" style="margin-left: 5px" @click="enviar">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" 
             stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" 
             class="css-i6dzq1"><line x1="22" y1="2" x2="11" y2="13"></line><polygon 
-            points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></Button>
-            <!--  -->
-            
+            points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></Button>           
         </div>
     </div>
   </div>
@@ -55,13 +49,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
-//import HelloWorld from '@/components/HelloWorld.vue'
 import '@/css/home.css';
 import axios from "axios";
-// import Checkbox from 'primevue/checkbox';
 import Clipboard from 'clipboard';
-
 
 export default {
   name: 'Home', 
@@ -78,18 +68,15 @@ export default {
         "local": ["chacara.jpg", "salao.jpeg"],
         "decoracao": ["arco.jpg","bolo.jpg","kit.jpg","baloes.jpg","tecido.jpg"]
       },
-    }
-    
+    }    
   }, 
   mounted() {
   new Clipboard('.btn-copy', {
     text: function() {
       return 'sua_chave_pix'
     }
-
-  }),
+    }),
    alert("Para iniciar ou interromper o recebimento de e-mails com novidades clique no sininho.")
-
   },
   methods:{
     notificacao(){
@@ -112,21 +99,14 @@ export default {
     },
     ativaNotificacao(){
       document.querySelector(".email").style.display = "block" 
-    },
-  
-  copyKey(mensagem) {
+    },  
+   copyKey(mensagem) {
     new Clipboard('.btn-copy', {
       text: function() {
         return mensagem.pix.copia_cola
       }
     }).on('success', function() {
       alert('Chave PIX copiada para a área de transferência')
-    //   this.$toast.add({
-    //         severity: 'success', 
-    //         summary: 'Chave PIX copiada para a área de transferência',
-    //         life: 3000
-                                 
-    // })
     })
     },
     adicionarMensagem(mensagem,usuario, imagem, pix){
@@ -148,7 +128,6 @@ export default {
       console.log(mensagem, usuario, imagem, pix) 
       this.$nextTick(this.scrollToBottom);
     },
-
     enviar(){
       this.adicionarMensagem(this.meuInput, 'user');
       this.receber(this.meuInput);
@@ -193,7 +172,5 @@ export default {
 
             lastMessage.scrollIntoView();
     }
-
 }}
-
 </script>
