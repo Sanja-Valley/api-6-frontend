@@ -26,16 +26,27 @@
                   <br>{{imagem_index + 1}}
                   <img :src="require(`@/assets/${imagem}`)" class="imagemChat" >
                 </div>
+                <div v-for="(imagem_externa, imagem_index) in mensagem.imagem_externa" :key="imagem_index">
+                  <br>{{imagem_index + 1}}
+                  <figure>
+                      <img :src= "imagem_externa" class="imagemChat" >
+                      <figcaption>{{ legenda }}</figcaption>
+                  </figure>
+                </div>
                 <div v-if="mensagem.pix" class="qrCode">
                   <br>
                   <img :src="`data:image/png;base64, ${mensagem.pix.codigo_QR}`" >
                   <br>
                   <button class="btn-copy" @click="copyKey(mensagem)">Copiar chave PIX</button>
+
                 </div>              
+
               </div>
             </div>           
         </div>
+
       <div class="areaInput">
+
             <input  id="enviar" type="text" v-model="meuInput" placeholder="Digite sua mensagem" @keypress="verifica">
             <Button id="enviar" type="button" icon="pi pi-search" class="buttonEnviar" style="margin-left: 5px" @click="enviar">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" 
@@ -64,6 +75,7 @@ export default {
       meuContexto: 'geral',
       n: 0,
       mensagens: [],
+      legenda: "",
       imagens:{
         "local": ["chacara.jpg", "salao.jpeg"],
         "decoracao": ["arco.jpg","bolo.jpg","kit.jpg","baloes.jpg","tecido.jpg"]
@@ -109,7 +121,7 @@ export default {
       alert('Chave PIX copiada para a área de transferência')
     })
     },
-    adicionarMensagem(mensagem,usuario, imagem, pix){
+    adicionarMensagem(mensagem,usuario, imagem, imagem_externa,  pix){
       let retorno = {
         "mensagem": mensagem, 
         "usuario": usuario
@@ -119,13 +131,18 @@ export default {
         imagem = []
       }
       retorno["imagem"] = imagem
+      if(!imagem_externa){
+        imagem_externa = []
+      }
+      retorno["imagem_externa"] = imagem_externa
+      
       
       if(pix){
         retorno["pix"] = pix
       }
       
       this.mensagens.push(retorno);
-      console.log(mensagem, usuario, imagem, pix) 
+      console.log(mensagem, imagem_externa, usuario, imagem, pix) 
       this.$nextTick(this.scrollToBottom);
     },
     enviar(){
@@ -143,6 +160,7 @@ export default {
         let resposta = ''
         let pix = ''
         let imagem = null
+        let imagem_externa = null
 
         if(this.meuContexto == "finalizar"){
           resposta = response.data.resposta.mensagem
@@ -159,7 +177,14 @@ export default {
           resposta = respostas_partes[0]; 
           imagem = this.imagens[respostas_partes[1]];
         }
-        this.adicionarMensagem(resposta, "bot", imagem, pix);
+        if(resposta.includes("#")){
+          let respostas_partes = resposta.split("#")
+          resposta = respostas_partes[0]; 
+          imagem_externa = respostas_partes[1].split(",");
+          this.legenda = resposta.split(/(?=[A-Z])/)[0]
+
+        }
+        this.adicionarMensagem(resposta, "bot", imagem, imagem_externa, pix);
 
       })},
     verifica(e){
