@@ -27,7 +27,6 @@ body{
 }
 
 .chat{
-    display: none;
     position: fixed;
     right:  20px;
     bottom: 10px;
@@ -93,7 +92,6 @@ body{
 .user{
     max-width: 218px;
     right: 0px;
-    /*position: absolute;*/
     position: relative;
     background:rgb(245, 244, 244) ;
     width: max-content;
@@ -111,9 +109,6 @@ body{
 .buttonEnviar{
     background-color:rgba(0,0,0,0);
     border: none;
-    /* justify-items: center; */
-
-
 }
 
 .sent-by{
@@ -155,18 +150,7 @@ body{
     margin-top: 10px;
 }
 
-.termo{
-    position: absolute;
-    top: 0;
-    border: solid 1px;
-    border-color: #6d1056;
-    width: 600px;
-    height: 550px;
-    padding: 30px;
-    margin-left: calc(50% - 300px);
-    display: none;
-    background-color: aliceblue;
-}
+
 
 input[type=checkbox]{
 	height: 0;
@@ -210,13 +194,6 @@ input:checked + label:after {
 label:active:after {
 	width: 80px;
 }
-
-/* body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-} */
 
 .aceite{
     background: #5f023171;
