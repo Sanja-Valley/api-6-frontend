@@ -38,12 +38,15 @@
                   <img :src="`data:image/png;base64, ${mensagem.pix.codigo_QR}`" >
                   <br>
                   <button class="btn-copy" @click="copyKey(mensagem)">Copiar chave PIX</button>
-                </div>             
+
+                </div>              
+
               </div>
-            </div>  
-            
+            </div>           
         </div>
-        <div class="areaInput">
+
+      <div class="areaInput">
+
             <input  id="enviar" type="text" v-model="meuInput" placeholder="Digite sua mensagem" @keypress="verifica">
             <Button id="enviar" type="button" icon="pi pi-search" class="buttonEnviar" style="margin-left: 5px" @click="enviar">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" 
@@ -61,7 +64,6 @@ import '@/css/home.css';
 import axios from "axios";
 import Clipboard from 'clipboard';
 
-
 export default {
   name: 'Home', 
   components: {
@@ -78,18 +80,15 @@ export default {
         "local": ["chacara.jpg", "salao.jpeg"],
         "decoracao": ["arco.jpg","bolo.jpg","kit.jpg","baloes.jpg","tecido.jpg"]
       },
-    }
-    
+    }    
   }, 
   mounted() {
   new Clipboard('.btn-copy', {
     text: function() {
       return 'sua_chave_pix'
     }
-
-  }),
+    }),
    alert("Para iniciar ou interromper o recebimento de e-mails com novidades clique no sininho.")
-
   },
   methods:{
     notificacao(){
@@ -112,9 +111,8 @@ export default {
     },
     ativaNotificacao(){
       document.querySelector(".email").style.display = "block" 
-    },
-  
-  copyKey(mensagem) {
+    },  
+   copyKey(mensagem) {
     new Clipboard('.btn-copy', {
       text: function() {
         return mensagem.pix.copia_cola
@@ -147,7 +145,6 @@ export default {
       console.log(mensagem, imagem_externa, usuario, imagem, pix) 
       this.$nextTick(this.scrollToBottom);
     },
-
     enviar(){
       this.adicionarMensagem(this.meuInput, 'user');
       this.receber(this.meuInput);
@@ -200,7 +197,5 @@ export default {
 
             lastMessage.scrollIntoView();
     }
-
 }}
-
 </script>
